@@ -10,18 +10,19 @@ st.title('Kohler Home Services - Probabilities of Sales Funnel')
 # User inputs for Customer ID and Zipcode
 customer_id = st.text_input('Enter Customer ID:', '')
 zipcode = st.text_input('Enter Zipcode:', '')
+call_sentiment = st.text_input('Enter Call Sentiment (1 to 5):', '')
+budget = st.text_input('Enter the budget of project:', '')
 
 # Mapping dictionaries for categorical columns
 population_mapping = {1: '<30', 2: '30-40', 3: '40-50',4: '50-60', 5: '60-70', 6: '>70'}
 credit_mapping = {1: '<500', 2: '500-550', 3: '550-600',4: '600-650', 5: '650-700', 6: '700-750',7: '750-800', 8: '800-850', 9: '>850'}
 
-call_sentiment = st.text_input('Enter Call Sentiment (1 to 5):', '')
-budget = st.text_input('Enter the budget of project:', '')
-
 # Display selected columns
 if customer_id and zipcode and call_sentiment and budget :
     try:
         customer_id = int(customer_id)  # Convert input to int
+        call_sentiment = float(call_sentiment)
+        budget = float(budget)
         filtered_data = data[(data.index == customer_id) & (data['zipcode'] == int(zipcode))]
         if not filtered_data.empty:
             filtered_data = filtered_data.replace({'population_agegroup': population_mapping , 'credit_score': credit_mapping})
